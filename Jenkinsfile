@@ -1,23 +1,27 @@
-/* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent any
-
+    
+    tools {nodejs "node"}
+    
     stages {
-        stage('Instalar dependências') {
+        
+        stage('Cloning Git') {
             steps {
-                // Etapa para instalar dependências usando npm
-                bat 'npm install -g npm@latest'
+                git 'https://github.com/Mauriciom77/PlayTeste.git'
             }
         }
-        stage('Instalar Playwright') {
+        
+        stage('Install dependencies') {
             steps {
-                bat 'npm install -g playwright'
-                  }
+                sh 'npm install'
+            }
         }
-        stage('Executar testes') {
+        
+        stage('Run tests') {
             steps {
-                // Etapa para executar testes usando Playwright
-                bat 'npm run testCase'
+                script {
+                    sh 'npm run testcase'
+                }
             }
         }
     }
