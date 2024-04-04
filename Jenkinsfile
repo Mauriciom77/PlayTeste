@@ -17,7 +17,7 @@ pipeline {
         stage('Executar testes') {
             steps {
                 // Etapa para executar testes usando Playwright
-                bat 'npx playwright test'
+                bat 'npm run testCase'
             }
         }
     }
