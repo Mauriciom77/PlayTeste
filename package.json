@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "testCase":"npx playwright test --project=chromium"
+    "testCase":"npx playwright test --project=chromium",
+    "bowerInstall": "bower install"
   },
   "keywords": [],
   "author": "",
