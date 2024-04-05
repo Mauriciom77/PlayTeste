@@ -2,6 +2,18 @@ pipeline {
     agent any
     
     stages {
+        stage('Change Docker permissions') {
+            steps {
+                script {
+                    // Adiciona o usuário do Jenkins ao grupo Docker
+                    sh 'sudo usermod -aG docker jenkins'
+                    
+                    // Altera as permissões do soquete do Docker
+                    sh 'sudo chmod 666 /var/run/docker.sock'
+                }
+            }
+        }
+        
         stage('Pull Docker Image') {
             steps {
                 script {
