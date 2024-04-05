@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     stages {
-         stage('Pull Docker Image') {
+        stage('Pull Docker Image') {
             steps {
                 script {
                     // Executa o pull da imagem Docker
@@ -10,26 +10,29 @@ pipeline {
                 }
             }
         }
+        
         stage('Setup and Test') {
             agent {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.43.0-jammy'
                 }
             }
-        }
-        stage('install playwright') {
             steps {
-                sh '''
-                    npm i -D @playwright/test
-                    npx playwright install
-                '''
+                script {
+                    sh '''
+                        npm i -D @playwright/test
+                        npx playwright install
+                    '''
+                }
             }
         }
+        
         stage('help') {
             steps {
                 sh 'npx playwright test --help'
             }
         }
+        
         stage('test') {
             steps {
                 sh '''
