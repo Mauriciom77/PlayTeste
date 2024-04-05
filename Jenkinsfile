@@ -36,7 +36,7 @@ pipeline {
             steps {
                 
                 script {
-                    def testResult = sh(returnStatus: true, script: 'mocha -R spec tests/google.spec.ts')
+                    def testResult = sh(returnStatus: true, script: 'npx playwright test google')
                     if (testResult == 0) {
                         currentBuild.description = 'Testes concluídos com sucesso!'
                     } else {
