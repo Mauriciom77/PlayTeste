@@ -14,7 +14,7 @@ pipeline {
         stage('Setup and Test') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.43.0-jammy'
+                    image 'mcr.microsoft.com/playwright:v1.42.1-jammy'
                 }
             }
             steps {
