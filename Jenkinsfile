@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Executa o pull da imagem Docker
-                    sh 'docker pull mcr.microsoft.com/playwright:v1.43.0-jammy'
+                    sh 'docker pull mcr.microsoft.com/playwright:v1.42.1-jammy'
                 }
             }
         }
