@@ -11,6 +11,13 @@ pipeline {
                 }
             }
         }
+        stage('Exibir informações do Git') {
+            steps {
+                echo "Commit: ${env.GIT_COMMIT}"
+                echo "Branch: ${env.GIT_BRANCH}"
+                echo "URL do Repositório: ${env.GIT_URL}"
+            }
+        }
         stage('Cloning Git') {
             steps {
                 git 'https://github.com/Mauriciom77/PlayTeste.git'
