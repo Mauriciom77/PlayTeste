@@ -12,8 +12,8 @@ const TODO_ITEMS = [
 
 
 test('should allow me to add todo items', async ({ page }) => {
-  await page.locator("ggg").click();
-  await page.screenshot({ path: 'screenshot.png' });
+    await page.screenshot({ path: 'screenshot.png' });
 
 });
-
+    
+  
