@@ -1,11 +1,22 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/playwright:v1.43.0-jammy'
-            args '-u root' // Executar o contêiner como root
-        }
-    }
+    agent any
+    
     stages {
+         stage('Pull Docker Image') {
+            steps {
+                script {
+                    // Executa o pull da imagem Docker
+                    sh 'docker pull mcr.microsoft.com/playwright:v1.43.0-jammy'
+                }
+            }
+        }
+        stage('Setup and Test') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.43.0-jammy'
+                }
+            }
+        }
         stage('install playwright') {
             steps {
                 sh '''
