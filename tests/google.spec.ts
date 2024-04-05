@@ -11,7 +11,7 @@ const TODO_ITEMS = [
 ];
 
 
-test('should allow me to add todo items', async ({ page }) => {
+test('google teste', async ({ page }) => {
     await page.screenshot({ path: 'screenshot.png' });
 
 });
