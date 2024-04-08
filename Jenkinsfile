@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    
-    tools {nodejs "node"}
-    
+
+    tools { nodejs 'node' }
+
     stages {
         stage('Check Node.js version') {
             steps {
@@ -11,25 +11,44 @@ pipeline {
                 }
             }
         }
+        stage('Exibir informações do Git') {
+            steps {
+                echo "Commit: ${env.GIT_COMMIT}"
+                echo "Branch: ${env.GIT_BRANCH}"
+                echo "URL do Repositório: ${env.GIT_URL}"
+            }
+        }
         stage('Cloning Git') {
             steps {
                 git 'https://github.com/Mauriciom77/PlayTeste.git'
             }
         }
-        
+
         stage('Install dependencies') {
             steps {
-                sh 'npm install'
-                sh 'npm install @playwright/test@1.42.1'
-                sh 'npm install -g mocha'
+                sh '''
+                npm i -D install @playwright/test@1.42.1
+                npx playwright install
+                '''
             }
         }
-        
+        stage('help'){
+            steps{
+                sh 'npx playwright --help'
+            }
+        }
+        stage('Run testes'){
+            steps{
+                sh'''
+                    npx playwright test --list
+                    npx playwright test
+                '''
+            }
+        }
         stage('Run tests') {
             steps {
-                
                 script {
-                    def testResult = sh(returnStatus: true, script: 'mocha -R spec tests/google.spec.ts')
+                    def testResult = sh(returnStatus: true, script: 'npx playwright test google')
                     if (testResult == 0) {
                         currentBuild.description = 'Testes concluídos com sucesso!'
                     } else {
@@ -48,6 +67,5 @@ pipeline {
                 )
             }
         }*/
-        
     }
 }
