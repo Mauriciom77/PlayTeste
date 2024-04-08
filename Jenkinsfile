@@ -26,9 +26,10 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-               sh '''
-                    npm i -D @playwright/test@1.42.1
-                    npm install --save-dev mocha
+                sh '''
+                npm i -D install @playwright/test@1.42.1
+                npx playwright install
+                npm install --save-dev mocha
                 '''
             }
         }
@@ -37,26 +38,26 @@ pipeline {
                 sh 'npx playwright --help'
             }
         }
-        stage('Run testes'){
-            steps{
-                sh'''
-                    mocha -R spec test/google.spec.ts
-                '''
-                    //npx playwright test
-            }
-        }
-        // stage('Run tests') {
-        //     steps {
-        //         script {
-        //             def testResult = sh(returnStatus: true, script: 'npx playwright test google')
-        //             if (testResult == 0) {
-        //                 currentBuild.description = 'Testes concluídos com sucesso!'
-        //             } else {
-        //                 currentBuild.description = 'Testes falharam!'
-        //             }
-        //         }
+        // stage('Run testes'){
+        //     steps{
+        //         sh'''
+        //             npx playwright test --list
+        //             npx playwright test
+        //         '''
         //     }
         // }
+        stage('Run tests') {
+            steps {
+                script {
+                    def testResult = sh(returnStatus: true, script: 'npx playwright test google')
+                    if (testResult == 0) {
+                        currentBuild.description = 'Testes concluídos com sucesso!'
+                    } else {
+                        currentBuild.description = 'Testes falharam!'
+                    }
+                }
+            }
+        }
         //alteração
         /*stage('Send email') {
             steps {
