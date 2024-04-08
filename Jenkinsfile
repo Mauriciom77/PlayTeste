@@ -29,7 +29,6 @@ pipeline {
                 sh '''
                 npm i -D install @playwright/test@1.42.1
                 npx playwright install
-                npm install --save-dev mocha
                 '''
             }
         }
@@ -43,13 +42,14 @@ pipeline {
         //         sh'''
         //             npx playwright test --list
         //             npx playwright test
+        //             npx playwright test google
         //         '''
         //     }
         // }
         stage('Run tests') {
             steps {
                 script {
-                    def testResult = sh(returnStatus: true, script: 'npx playwright test google')
+                    def testResult = sh(returnStatus: true, script: 'npm run testcase')
                     if (testResult == 0) {
                         currentBuild.description = 'Testes concluídos com sucesso!'
                     } else {
