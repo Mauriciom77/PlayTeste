@@ -8,6 +8,7 @@ pipeline {
             steps {
                 script {
                     sh 'node --version'
+                    sh 'echo $PATH'
                 }
             }
         }
