@@ -1,57 +1,53 @@
 pipeline {
     agent any
     
+    tools {nodejs "node"}
+    
     stages {
-        stage('Change Docker permissions') {
+        stage('Check Node.js version') {
             steps {
                 script {
-                    // Adiciona o usuário do Jenkins ao grupo Docker
-                    sh 'sudo usermod -aG docker jenkins'
-                    
-                    // Altera as permissões do soquete do Docker
-                    sh 'sudo chmod 666 /var/run/docker.sock'
+                    sh 'node --version'
                 }
             }
         }
-        
-        stage('Pull Docker Image') {
+        stage('Cloning Git') {
             steps {
+                git 'https://github.com/Mauriciom77/PlayTeste.git'
+            }
+        }
+        
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+                sh 'npm install @playwright/test@1.42.1'
+                sh 'npm install -g mocha'
+            }
+        }
+        
+        stage('Run tests') {
+            steps {
+                
                 script {
-                    // Executa o pull da imagem Docker
-                    sh 'docker pull mcr.microsoft.com/playwright:v1.42.1-jammy'
+                    def testResult = sh(returnStatus: true, script: 'mocha -R spec tests/google.spec.ts')
+                    if (testResult == 0) {
+                        currentBuild.description = 'Testes concluídos com sucesso!'
+                    } else {
+                        currentBuild.description = 'Testes falharam!'
+                    }
                 }
             }
         }
-        
-        stage('Setup and Test') {
-            agent {
-                docker {
-                    image 'mcr.microsoft.com/playwright:v1.42.1-jammy'
-                }
-            }
+        /*stage('Send email') {
             steps {
-                script {
-                    sh '''
-                        npm i -D @playwright/test
-                        npx playwright install
-                    '''
-                }
+                // Enviar e-mail
+                emailext (
+                    subject: "Teste envio ",
+                    body: "${currentBuild.description}",
+                    to: "mauricio@unicorp.com.br"
+                )
             }
-        }
+        }*/
         
-        stage('help') {
-            steps {
-                sh 'npx playwright test --help'
-            }
-        }
-        
-        stage('test') {
-            steps {
-                sh '''
-                    npx playwright test --list
-                    npx playwright test
-                '''
-            }
-        }
     }
 }
