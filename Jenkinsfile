@@ -29,6 +29,7 @@ pipeline {
                 sh '''
                 npm i -D install @playwright/test@1.42.1
                 npx playwright install
+                npm install --save-dev mocha
                 '''
             }
         }
@@ -52,7 +53,7 @@ pipeline {
         //             if (testResult == 0) {
         //                 currentBuild.description = 'Testes concluídos com sucesso!'
         //             } else {
-        //                 currentBuild.description = 'Testes falha!'
+        //                 currentBuild.description = 'Testes falharam!'
         //             }
         //         }
         //     }
