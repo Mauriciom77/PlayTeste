@@ -40,7 +40,7 @@ pipeline {
         stage('Run testes'){
             steps{
                 sh'''
-                    npx playwright test --list
+                    mocha -R spec tests/google.spec.ts
                 '''
                     //npx playwright test
             }
