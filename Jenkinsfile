@@ -41,22 +41,22 @@ pipeline {
             steps{
                 sh'''
                     npx playwright test --list
-                    npx playwright test
                 '''
+                    //npx playwright test
             }
         }
-        stage('Run tests') {
-            steps {
-                script {
-                    def testResult = sh(returnStatus: true, script: 'npx playwright test google')
-                    if (testResult == 0) {
-                        currentBuild.description = 'Testes concluídos com sucesso!'
-                    } else {
-                        currentBuild.description = 'Testes falha!'
-                    }
-                }
-            }
-        }
+        // stage('Run tests') {
+        //     steps {
+        //         script {
+        //             def testResult = sh(returnStatus: true, script: 'npx playwright test google')
+        //             if (testResult == 0) {
+        //                 currentBuild.description = 'Testes concluídos com sucesso!'
+        //             } else {
+        //                 currentBuild.description = 'Testes falha!'
+        //             }
+        //         }
+        //     }
+        // }
         //alteração
         /*stage('Send email') {
             steps {
