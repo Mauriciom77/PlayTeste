@@ -26,10 +26,9 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                sh '''
-                npm i -D install @playwright/test@1.42.1
-                npx playwright install
-                npm install --save-dev mocha
+               sh '''
+                    npm i -D @playwright/test@1.42.1
+                    npm install --save-dev mocha
                 '''
             }
         }
