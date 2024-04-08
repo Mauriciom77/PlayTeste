@@ -37,27 +37,26 @@ pipeline {
                 sh 'npx playwright --help'
             }
         }
-        // stage('Run testes'){
-        //     steps{
-        //         sh'''
-        //             npx playwright test --list
-        //             npx playwright test
-        //             npx playwright test google
-        //         '''
-        //     }
-        // }
-        stage('Run tests') {
-            steps {
-                script {
-                    def testResult = sh(returnStatus: true, script: 'npm run testcase')
-                    if (testResult == 0) {
-                        currentBuild.description = 'Testes concluídos com sucesso!'
-                    } else {
-                        currentBuild.description = 'Testes falharam!'
-                    }
-                }
+        stage('Run testes'){
+            steps{
+                sh'''
+                    npx playwright test --list
+                    npx playwright test google
+                '''
             }
         }
+        // stage('Run tests') {
+        //     steps {
+        //         script {
+        //             def testResult = sh(returnStatus: true, script: 'mocha -R spec tests/**/*.spec.js')
+        //             if (testResult == 0) {
+        //                 currentBuild.description = 'Testes concluídos com sucesso!'
+        //             } else {
+        //                 currentBuild.description = 'Testes falharam!'
+        //             }
+        //         }
+        //     }
+        // }
         //alteração
         /*stage('Send email') {
             steps {
