@@ -52,11 +52,12 @@ pipeline {
                     if (testResult == 0) {
                         currentBuild.description = 'Testes concluídos com sucesso!'
                     } else {
-                        currentBuild.description = 'Testes falharam!'
+                        currentBuild.description = 'Testes falha!'
                     }
                 }
             }
         }
+        //alteração
         /*stage('Send email') {
             steps {
                 // Enviar e-mail
